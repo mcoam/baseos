@@ -1,0 +1,85 @@
+## Generate by PUPPET
+#
+#
+127.0.0.1	localhost.localdomain localhost localhost4 localhost4.localdomain4
+::1	localhost6.localdomain6 localhost6 localhost6.localdomain6
+
+#Puppet
+10.132.17.180	puppet.tvn.org master.tvn.org puppet
+10.132.17.182	node1.tvn.org node1
+
+#Proxy
+10.132.17.151	proxy-http
+
+192.9.200.140   ntp.tvn.org
+
+# Escenic
+10.132.17.176	prod-pres1.tvn.cl	prod-pres1
+10.132.17.175   prod-ana
+10.132.17.176   prod-pres1
+10.132.17.177   prod-pres2
+10.132.17.148   prod-pres3.tvn.cl prod-pres3
+10.132.17.149   prod-pres4.tvn.cl prod-pres4
+10.132.17.178   prod-db1
+10.132.17.179   prod-db2
+10.132.17.184   prod-pub1
+10.132.17.185   prod-pub2
+10.132.17.147   prod-san
+10.132.17.184	prod-pub.tvn.org
+
+# Wowza
+10.132.17.171		TVN-Wowza1.tvn.org
+10.132.17.172		TVN-Wowza2.tvn.org
+10.132.17.152		TVN-Wowza3.tvn.org
+10.132.17.151		TVN-Wowza4.tvn.org
+
+# Origin
+10.132.17.160		TVN-Origin1.tvn.org
+10.132.17.161		TVN-Origin2.tvn.org
+
+# Varnish
+10.132.17.131	varnish01.tvn.cl varnish01
+10.132.17.133	varnish02.tvn.cl varnish02
+
+#haproxies
+10.132.17.135	haproxy01.tvn.cl haproxy01
+10.132.17.137	haproxy02.tvn.cl haproxy02
+
+# NGinx
+10.132.17.141   nginx01.tvn.cl 	nginx01
+10.132.17.143   nginx02.tvn.cl	nginx02
+
+# GlusterFS
+10.132.17.158   glusterfs.tvn.org     glusterfs
+10.132.17.154	glusterfs01.tvn.org	glusterfs01
+10.132.17.155	glusterfs02.tvn.org     glusterfs02
+10.132.17.156	glusterfs03.tvn.org     glusterfs03
+10.132.17.157	glusterfs04.tvn.org     glusterfs04
+
+# Monitoreo
+10.132.17.162	grafana.tvn.org		grafana grafanax.tvn.org
+10.132.17.163	kibana.tvn.org		kibana	
+10.132.17.103 nagios.tvn.org		nagios
+
+# New Escenic Puppet
+10.132.17.110 next-db-1.tvn.org	next-db-1
+10.132.17.111 next-db-2.tvn.org	next-db-2
+10.132.17.112 next-idxsearch-1.tvn.org next-idxsearch-1
+10.132.17.113 next-editorial-1.tvn.org next-editorial-1
+10.132.17.122 next-editorial-2.tvn.org next-editorial-2
+10.132.17.114 next-presentation-1.tvn.org next-presentation-1
+10.132.17.119 next-presentation-2.tvn.org next-presentation-2
+10.132.17.120 next-presentation-3.tvn.org next-presentation-3
+10.132.17.121 next-presentation-4.tvn.org next-presentation-4
+10.132.17.115 next-deploy-1.tvn.org next-deploy-1 deploy.24horas.cl deploy.tvn.cl deploy.tvnet.cl deploy.tvchile.cl
+<% if @fqdn =~ /^next-.*\.tvn\.org/ %>
+10.132.17.116 next-haproxy-1.tvn.org next-haproxy-1 www.tvn.cl www.24horas.cl www.tvchile.cl www.tvnet.cl editorial.tvn.org
+<% else %>
+10.132.17.116 next-haproxy-1.tvn.org next-haproxy-1 editorial.tvn.org
+<% end %>
+10.132.17.117 next-eae-1.tvn.org
+10.132.17.118 next-feeds-1.tvn.org
+10.132.17.164 docker-1.tvn.org docker-1
+10.132.17.165 validator.tvn.org validator
+10.132.17.104 logstash.tvn.org logstash
+10.132.17.123 varnish-staging.tvn.org varnish-staging varnish-test
