@@ -1,0 +1,25 @@
+127.0.0.1   localhost localhost.localdomain localhost4 localhost4.localdomain4
+::1         localhost localhost.localdomain localhost6 localhost6.localdomain6
+
+# Plataforma Zbox
+
+192.168.0.151	mailbox-01.zboxapp.com	mailbox01
+192.168.0.152	mailbox-02.zboxapp.com	mailbox02
+192.168.0.153	mailbox-03.zboxapp.com	mailbox03
+
+192.168.0.161	ldap-01.zboxapp.com	ldap-01
+
+192.168.0.171	mta-in-01.zboxapp.com	mta-in-01
+192.168.0.172	mta-in-02.zboxapp.com	mta-in-02
+192.168.0.173	mta-in-03.zboxapp.com	mta-in-03
+
+192.168.0.181	mta-out-01.zboxapp.com	mta-out-01
+192.168.0.182	mta-out-02.zboxapp.com	mta-out-02
+192.168.0.183	mta-out-03.zboxapp.com	mta-out-03
+
+192.168.0.191	archiving-01.zboxapp.com	archiving-01
+
+192.168.0.201	puppet.zboxapp.com	puppet
+192.168.0.202	admin.zboxapp.com	admin
+192.168.0.203	logs.zboxapp.com	logs
+

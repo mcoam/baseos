@@ -2,23 +2,20 @@ class baseos::packages {
 
 case $osfamily {
 	'Redhat': { 
-	include 'baseos::sysdig'
-	
-	$allpackage = [ "screen", "strace", "telnet", "nmap", "traceroute", "sysstat", "nc", "bind-utils", "tcpdump", "tzdata", "zsh", "pv", "perl-Nagios-Plugin", "libuuid" ]
-		package { $allpackage: 
-							ensure => "present" 
-						}
-	
+	$allpackage = [ "screen", "strace", "telnet", "nmap", "traceroute", "sysstat", "nc", "bind-utils", "tcpdump", "tzdata", "zsh", "pv", "libuuid", "links"]
+	package { $allpackage: 
+		ensure => "present" 
+	}
 	package {"bash":
-				      ensure => "latest"
-			    }
-  	}
-
+	      ensure => "latest"
+ 	}
+  }
 	'Debian': {
 	
 	$allpackage = [ "screen", "strace", "telnet", "nmap", "traceroute", "sysstat", "tcpdump", "tzdata" ]
-		package { $allpackage: ensure => "present" }
-	
-        	}
-  }	
-} 
+
+	package { $allpackage: ensure => "present" 
+	}
+    }
+  } #cierra case
+} #cierra clase 

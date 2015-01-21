@@ -1,34 +1,97 @@
-class baseos::repo {
+class baseos::repo inherits baseos {
 
- $source = "puppet:///modules/${module_name}"
- Exec { path => [ "/bin/", "/sbin/" , "/usr/bin/", "/usr/sbin/" ] }
- $epelrpm  = "epel-release-6-8.noarch.rpm"
- $forgerpm = "rpmforge-release-0.5.3-1.el6.rf.x86_64.rpm"
-
-	file {"/root/$epelrpm":
+case $architecture{ 
+ 'x86_64':{
+    case $operatingsystemmajrelease {
+    '5':{ 
+	file {"/root/${repo_rpm_epel_r5}":
 		ensure => present,	
-		source => "$source/$epelrpm",
+		source => "puppet:///modules/${module_name}/rpm_repo/${repo_rpm_epel_r5}",
 		notify  => Exec["install-epel-repo"]
 	}
 
-  file {"/root/$forgerpm":
-		 ensure => present,
-     source => "$source/$forgerpm",
-     notify  => Exec["install-forge-repo"]
-   }
+	file {"/root/${repo_rpm_forge_r5}":
+		ensure => present,
+		source => "puppet:///modules/${module_name}/rpm_repo/${repo_rpm_forge_r5}",
+     		notify  => Exec["install-forge-repo"]
+	}
 
 	exec{"install-epel-repo":
-		#onlyif solo se ejecutara si se cumple con la condicion o esta es verdadera
-		#onlyif  => "/tmp/rpm", si solo esta el archivo se ejecuta
-		#refreshonly => true,
-		creates => "/etc/yum.repos.d/epel.repo",
-	   	command => "rpm -Uvh /root/$epelrpm --force",
-                require => File["/root/$epelrpm"],
+		cwd => "/root",
+		creates => "${repo_name_epel_file}",
+	   	command => "rpm -Uvh ${repo_rpm_epel_r5} --force",
+                require => File["/root/${repo_rpm_epel_r5}"],
+	}
+	exec{"install-forge-repo":
+		cwd => "/root",
+		creates => "${repo_name_forge_file}",
+                command => "rpm -Uvh ${repo_rpm_forge_r5} --force",
+                require => File["/root/${repo_rpm_forge_r5}"],
+        }
+#	  notify{"Valor: ${repo_rpm_forge_r5}": }
+    }##cierra case rhel 5
+    '6':{ 
+	file {"/root/${repo_rpm_epel_r6}":
+		ensure => present,	
+		source => "puppet:///modules/${module_name}/rpm_repo/${repo_rpm_epel_r6}",
+		notify  => Exec["install-epel-repo"]
+	}
+
+	file {"/root/${repo_rpm_forge_r6}":
+		ensure => present,
+		source => "puppet:///modules/${module_name}/rpm_repo/${repo_rpm_forge_r6}",
+     		notify  => Exec["install-forge-repo"]
+	}
+
+	exec{"install-epel-repo":
+		cwd => "/root",
+		creates => "${repo_name_epel_file}",
+	   	command => "rpm -Uvh ${repo_rpm_epel_r6} --force",
+                require => File["/root/${repo_rpm_epel_r6}"],
 	}
 	
 	exec{"install-forge-repo":
-		creates => "/etc/yum.repos.d/rpmforge.repo",
-                command => "rpm -Uvh /root/$forgerpm --force && yum-config-manager --enable rpmforge-testing",
-                require => File["/root/$forgerpm"],
+		cwd => "/root",
+		creates => "${repo_name_forge_file}",
+                command => "rpm -Uvh ${repo_rpm_forge_r6} --force",
+                require => File["/root/${repo_rpm_forge_r6}"],
         }
-}
+    }##cierra case rhel 6
+    '7':{
+		file {"/root/${repo_rpm_epel_r7}":
+		ensure => present,	
+		source => "puppet:///modules/${module_name}/rpm_repo/${repo_rpm_epel_r7}",
+		notify  => Exec["install-epel-repo"]
+	}
+
+	file {"/root/${repo_rpm_forge_r7}":
+		ensure => present,
+		source => "puppet:///modules/${module_name}/rpm_repo/${repo_rpm_forge_r7}",
+     		notify  => Exec["install-forge-repo"]
+	}
+
+	exec{"install-epel-repo":
+		cwd => "/root",
+		creates => "${repo_name_epel_file}",
+	   	command => "rpm -Uvh ${repo_rpm_epel_r7} --force",
+                require => File["/root/${repo_rpm_epel_r7}"],
+	}
+	
+	exec{"install-forge-repo":
+		cwd => "/root",
+		creates => "${repo_name_forge_file}",
+                command => "rpm -Uvh ${repo_rpm_forge_r7} --force",
+                require => File["/root/${repo_rpm_forge_r7}"],
+        }
+  } ###cierra rhel 7
+  default:{ 
+	notify{"Release no soportado": } 
+  } ###cierra default
+ } #cierra case release
+} #cierra x86_64
+  default:{ 
+         notify{"Arquitectura no soportada": } 
+  } ###cierra default
+} #cierra case architecture
+}#cierra clase
+

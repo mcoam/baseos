@@ -1,67 +1,33 @@
-class baseos::config   {
- $source = "puppet:///modules/${module_name}"
-       file { "/etc/selinux/config":
+class baseos::config inherits baseos   {
+      
+	$source_file="puppet:///modules/${module_name}/base_file" 
+
+	file { "/etc/selinux/config":
                 ensure  => present,
-                source  => "$source/config",
+                source  => "${source_file}/config",
                 mode    => 664,
         }
+	
+	exec { 'disable-selinux':
+          command => "setenforce 0",
+	  #ejecutar setenforce 0, solo si la salida del comando sestatus no trae nada (retorna 0)
+	  unless  => "sestatus |egrep '(Current mode:.*permissive)'";
+  	}
 
         file { "/etc/hosts":
                 ensure  => present,
-                #source  => "$source/hosts",
-								content => template('baseos/hosts.erb'),
+                source  => "${source_file}/hosts",
                 mode    => 664,
         }
 
-#	file { "/etc/profile.d/proxy.sh":
-#		ensure  => present,
-#		source  => "$source/proxy.sh",
-#	  mode    => 755,
-#		notify  => Exec["setting_proxy"]
-#	}
-
-	file {"/etc/yum.repos.d/glusterfs-epel.repo":
+ 	file {"/etc/logrotate.conf":
 		ensure  => present,
-                source  => "$source/glusterfs-epel.repo",
-                mode    => 700,
-	}
-	
-	#Array de servicios para deshabilitar
-	$service_off = [ "cups", "portmap", "nfs-kernel-server", "nfslock"  ]
- 	#Servicios deshabilitados	
-	service { $service_off: 
-		ensure => "stopped",
-		enable => false,
-	}	
-	#Array de servicios para habilitar
-	$service_on = [ "puppet", "postfix", "rpcbind" ]
-        #Servicios habilitados 	
-	service { $service_on:
-                ensure => "running",
-                enable => true,
-        }
-
-	cron { "sincroiza-ntp":
-			 	command => "ntpdate -u ntp.tvn.org",
-  			user    => "root",
- 				hour    => 00,
-  			minute  => 2,
+    		source  => "${source_file}/logrotate.conf",
 	}
 
-# exec {"ajusta-hora":
-#			command => "ntpdate -u ntp.tvn.org",
-#	}
-
-	file {"/etc/sysctl.conf":
+ 	file {"/etc/sysconfig/init":
 		ensure  => present,
-    source  => "$source/sysctl.conf",
+    		source  => "${source_file}/init",
 	}
-
- file {"/etc/security/limits.conf":
-		ensure  => present,
-    source  => "$source/limits.conf",
-	}
-
-
 
 }
