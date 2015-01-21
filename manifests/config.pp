@@ -10,7 +10,7 @@ class baseos::config inherits baseos   {
 	
 	exec { 'disable-selinux':
           command => "setenforce 0",
-	  #ejecutar setenforce 0, solo si la salida del comando sestatus no trae nada (retorna 0)
+	  #ejecutar setenforce 0, solo si la salida del comando sestatus no trae nada
 	  unless  => "sestatus |egrep '(Current mode:.*permissive)'";
   	}
 
